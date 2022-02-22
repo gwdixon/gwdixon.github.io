@@ -4,6 +4,8 @@ export default {
                       tooltip: "Improve your learning speed through practising intense concentration activities."},
     "Productivity":  {category: "Fundamentals", maxXp: 100, effect: {type: "all_job_xp",   value: 0.01, },
                       requirement: [{skill: "Concentration", level: 5}], 
+    "Super Productivity":  {category: "Fundamentals", maxXp: 10, effect: {type: "all_job_xp",   value: 0.1, },
+                      requirement: [{skill: "Concentration", level: 5}], 
                       tooltip: "Learn to procrastinate less at work and receive more job experience per day." }, 
     "Bargaining":    {category: "Fundamentals", maxXp: 100, effect: {type: "expense",   value: 0.01, multiplier: "inverse"},
                       requirement: [{skill: "Concentration", level: 20}], 
