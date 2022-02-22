@@ -1,8 +1,8 @@
 export default {
-    startingDays: 365 * 14,
+    startingDays: 365 * 4,
     startingCoins: 0,
-    gameSpeed: 4,
-    lifespan: 365 * 70,
+    gameSpeed: 400,
+    lifespan: 365 * 700,
     advancement: [
         {name: "Home",              requirement: [{coins: 1000}]},
         {name: "Automation",        requirement: [{age: 20}]},
