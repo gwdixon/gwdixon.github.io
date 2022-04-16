@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <!-- Ares Incremental by /u/Get2Hyped. Please, feel free to review my code and tell me if anything's wrong.
+    Happy blacksmithing! -->
+
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ares</title>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-139996061-2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-139996061-2');
+  </script>
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://unpkg.com/popper.js@1.14.6/dist/umd/popper.min.js"></script>
+
+</head>
+
+<body style="background-color: rgb(34,40,49)">
+  <div class="container-fluid">
+
+    <!--Ressources tab-->
+    <div class="column left">
+      <p class="tabTitle text-white text-center lead"><strong>Resources</strong></p>
+      <div class="">
+        <ul class="list-unstyled">
+          <li class="text-white goldcoins"><img src="sprites\items\coin_05d.png" /> Gold coins: <span id="money">0</span>
+            <footer class="blockquote-footer">Per second : </cite><span id="moneySpeed">0</span></footer>
+          </li>
+          <hr class="ressourceHR">
+          <li class="text-white">Wood: <span id="wood">0</span> <br> <progress id="progressWood" value="0"
+              max="1"></progress>
+            <footer class="blockquote-footer">Per second : </cite><span id="woodSpeed">0</span></footer>
+          </li>
+          <hr class="ressourceHR">
+          <li class="text-white">Nails: <span id="fibers">0</span> <br><progress id="progressFiber" value="0"
+              max="1"></progress>
+            <footer class="blockquote-footer">Per second : </cite><span id="fibersSpeed">0</span></footer>
+          </li>
+          <hr class="ressourceHR">
+          <li class="text-white">Research: <span id="research">0</span> <br><progress id="progressResearch" value="0"
+            max="1"></progress>
+          <footer class="blockquote-footer">Per second : </cite><span id="researchSpeed">0</span></footer>
+        </li>
+        </ul>
+      </div>
+    </div>
+
+    <!--Middle tab with navbar (Collect, upgrades)-->
+    <div class="column middle">
+      <!--Navbar-->
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a href="#collect" class="nav-link active" role="tab" data-toggle="tab">Collect</a>
+        </li>
+        <li class="nav-item">
+          <a href="#upgrades" class="nav-link" role="tab" data-toggle="tab">Upgrades</a>
+        </li>
+        <li class="nav-item">
+          <a href="#researchPanel" class="nav-link" role="tab" data-toggle="tab">Research</a>
+        </li>
+        <li class="nav-item">
+          <a href="#" onclick="clearSave()" class="nav-link text-danger" role="tab" data-toggle="tab">Delete save</a>
+        </li>
+      </ul>
+
+      <!--Navbar content-->
+      <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active text-danger" id="collect">
+          <button onClick="add(wood, 'progressWood')" type="button" class="btn btn-outline-warning wood">Chop wood
+            <img src="sprites\items\tile001.png" /></button>
+          <button onClick="add(fiber, 'progressFiber')" type="button" class="btn btn-outline-warning">Gather nails
+              <img src="sprites\items\tile000.png" /></button>
+              <button onClick="add(research, 'progressResearch')" type="button" class="btn btn-outline-warning">Read Ancient books<img src="sprites\items\book_06d.png" />
+                </button>
+          <p id="devMess" class="text-white fixed-center text-center">
+            <br>Thank you for giving a try to my game, <em class="text-danger">Ares.</em><br>
+            Please, note that it's still a prototype. (PS : C=Craft and S=Sell)
+            </p>
+          </p>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="upgrades">
+          <button onClick="hire(lumberjack, 1)" type="button" class="btn btn-outline-primary learn"
+            id="lumberjackCount"><span id="isLumberUpgraded">Hire</span> lumberjack<br>(<span id="lumberjackPrice">10</span>)</button>
+          <button onClick="hire(fiberCollector, 1)" type="button" class="btn btn-outline-primary learn"
+            id="fiberCollectorCount"><span id="isFiberUpgraded">Hire</span> nail producer<br>(<span id="fiberPrice">15</span>)</button>
+            <button onClick="hire(mage, 0.25)" type="button" class="btn btn-outline-primary learn"
+            id="mageCount"><span id="isMageUpgraded">Hire</span> mage<br>(<span id="magePrice">100</span>)</button>
+            <button onClick="Buysalesmen()" type="button" class="btn btn-outline-primary learn"
+            id="salesCount"><span id="isSalesUpgraded">Hire</span> salesmen<br>(<span id="salesPrice">80</span>)</button>
+            <button onClick="Buyblacksmith()" type="button" class="btn btn-outline-primary learn"
+            id="blacksmithCount"><span id="isBlacksmithUpgraded">Hire</span> blacksmith<br>(<span id="blacksmithPrice">80</span>)</button>
+
+        </div>
+        <div role="tabpanel" class="tab-pane text-white" id="researchPanel">
+          <button onClick="learn(woodenStaff)" type="button" class="btn btn-outline-primary learn" id="woodenStaffCount">Learn wooden staff recipe (50R)</button>
+          <button onClick="learn(woodenSword)" type="button" class="btn btn-outline-primary learn" id="woodenSwordCount">Learn wooden sword recipe (200R)</button>
+          <button onClick="learn(woodenBow)" type="button" class="btn btn-outline-primary learn" id="woodenBowCount">Learn wooden bow recipe (400R)</button>
+          <button onClick="learn(woodenShield)" type="button" class="btn btn-outline-primary learn" id="woodenShieldCount">Learn wooden shield recipe (600R)</button>
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <!--Right bar for crafting with a card system-->
+    <div class="column right">
+      <p class="tabTitle text-white text-center lead"><strong>Craft</strong></p>
+      
+
+      <div class="box">
+          <div class="container">
+             <div class="row">
+             
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                     
+                <div class="box-part text-center">
+                              
+                              <i class="fa fa-behance fa-3x" aria-hidden="true"></i>
+                              
+                  <div class="title">
+                    <img class="imgBox" src="sprites\items\key_01a.png" />
+                    <h3 class="cardTitle">Wooden Key</h3>
+                    <p class="Tier"><em><strong><span id="woodenKey">0</span> Keys.</strong></em></p>
+                    5<img src="sprites\items\coin_01d.png" width="25" height="20"/>
+                    <p class="craftRequirements">(1<img src="sprites\items\tile001.png" width="25" height="20"/>)</p>
+                    
+                  </div>
+                              
+                  
+                              
+                  <div class="ui-group-buttons">
+                      <button type="button" class="btn btn-warning" onClick="craftOne(wood, woodenKey, 1, 'craftWoodenKey')">C</button>
+                      <div class="or"></div>
+                      <button type="button" class="button btn btn-success" onClick="sell(woodenKey, 'sellWoodenKey')">S</button>
+                      
+                  </div>
+                  <progress class="Craft" id="craftWoodenKey" value="0" max="1"></progress>
+                  <progress class="Craft" id="sellWoodenKey" value="0" max="1"></progress>   
+                  <br>      
+                 </div>
+              </div>   
+              
+              <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" id="two-tab">
+                     
+                  <div class="box-part text-center">
+                                
+                                <i class="fa fa-behance fa-3x" aria-hidden="true"></i>
+                                
+                    <div class="title">
+                      <img class="imgBox" src="sprites\items\staff_01a.png" />
+                      <h3 class="cardTitle">Wooden Staff</h3>
+                      <p class="Tier"><em><strong><span id="woodenStaff">0</span> Staffs.</strong></em></p>
+                      12<img src="sprites\items\coin_01d.png" width="25" height="20"/>
+                      <p class="craftRequirements">(2<img src="sprites\items\tile001.png" width="25" height="20"/>)</p>
+                    </div>
+                                
+                    
+                                
+                    <div class="ui-group-buttons">
+                        <button type="button" class="btn btn-warning" onClick="craftOne(wood, woodenStaff, 2, 'craftWoodenStaff')">C</button>
+                        <div class="or"></div>
+                        <button type="button" class="button btn btn-success" onClick="sell(woodenStaff, 'sellWoodenStaff')">S</button>
+                    </div>    
+                    <progress class="Craft" id="craftWoodenStaff" value="0" max="1"></progress>
+                    <progress class="Craft" id="sellWoodenStaff" value="0" max="1"></progress>   
+                    <br>   
+                   </div>
+                </div>   
+                
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" id="three-tab">
+                     
+                    <div class="box-part text-center">
+                                  
+                                  <i class="fa fa-behance fa-3x" aria-hidden="true"></i>
+                                  
+                      <div class="title">
+                        <img class="imgBox" src="sprites\items\sword_02a.png" />
+                        <h3 class="cardTitle">Wooden Sword</h3>
+                        <p class="Tier"><em><strong><span id="woodenSword">0</span> Swords.</strong></em></p>
+                        17<img src="sprites\items\coin_01d.png" width="25" height="20"/>
+                        <p class="craftRequirements">(3<img src="sprites\items\tile001.png" width="25" height="20"/>) (5<img src="sprites/items/tile000.png" width="25" height="20"/>)</p>
+                      </div>
+                                  
+                      
+                                  
+                      <div class="ui-group-buttons">
+                          <button type="button" class="btn btn-warning" onClick="craftTwo(wood, 3, fiber, 5, woodenSword, 'craftWoodenSword')">C</button>
+                          <div class="or"></div>
+                          <button type="button" class="button btn btn-success" onClick="sell(woodenSword, 'sellWoodenSword')">S</button>
+                      </div>    
+                      <progress class="Craft" id="craftWoodenSword" value="0" max="1"></progress>
+                      <progress class="Craft" id="sellWoodenSword" value="0" max="1"></progress>   
+                      <br>   
+                     </div>
+                  </div>
+                  <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" id="four-tab">
+                     
+                      <div class="box-part text-center">
+                                    
+                                    <i class="fa fa-behance fa-3x" aria-hidden="true"></i>
+                                    
+                        <div class="title">
+                          <img class="imgBox" src="sprites\items\WoodenBow2.png" />
+                          <h3 class="cardTitle">Wooden Bow</h3>
+                          <p class="Tier"><em><strong><span id="woodenBow">0</span> Bows.</strong></em></p>
+                          22<img src="sprites\items\coin_01d.png" width="25" height="20"/>
+                          <p class="craftRequirements"> (4<img src="sprites\items\tile001.png" width="25" height="20"/>)</p>
+                        </div>
+                                    
+                        
+                                    
+                        <div class="ui-group-buttons">
+                            <button type="button" class="btn btn-warning" onClick="craftOne(wood, woodenBow, 4, 'craftWoodenBow')">C</button>
+                            <div class="or"></div>
+                            <button type="button" class="button btn btn-success" onClick="sell(woodenBow, 'sellWoodenBow')">S</button>
+                        </div>    
+                        <progress class="Craft" id="craftWoodenBow" value="0" max="1"></progress>
+                        <progress class="Craft" id="sellWoodenBow" value="0" max="1"></progress>   
+                        <br>   
+                       </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" id="five-tab">
+                     
+                        <div class="box-part text-center">
+                                      
+                                      <i class="fa fa-behance fa-3x" aria-hidden="true"></i>
+                                      
+                          <div class="title">
+                            <img class="imgBox" src="sprites\items\shield_01a.png"/>
+                            <h3 class="cardTitle">Wooden Shield</h3>
+                            <p class="Tier"><em><strong><span id="woodenShield">0</span> Shields.</strong></em></p>
+                            27<img src="sprites\items\coin_01d.png" width="25" height="20"/>
+                            <p class="craftRequirements">(5<img src="sprites\items\tile001.png" width="25" height="20"/>) (8<img src="sprites/items/tile000.png" width="25" height="20"/>)</p>
+                          </div>
+                                      
+                          
+                                      
+                          <div class="ui-group-buttons">
+                              <button type="button" class="btn btn-warning" onClick="craftTwo(wood, 5, fiber, 8, woodenShield, 'craftWoodenShield')">C</button>
+                              <div class="or"></div>
+                              <button type="button" class="button btn btn-success" onClick="sell(woodenShield, 'sellWoodenShield')">S</button>
+                          </div>    
+                          <progress class="Craft" id="craftWoodenShield" value="0" max="1"></progress>
+                          <progress class="Craft" id="sellWoodenShield" value="0" max="1"></progress>   
+                          <br>   
+                         </div>
+                      </div>     
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- jQuery first, then Bootstrap JS. -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js"></script>
+    <script src="js\main.js"></script>
+
+</body>
+<footer class="fixed-bottom text-center">ARES | Game made with ❤️ and ☕ by Get2Hyped
+    (v0.2f)</footer>
+
+</html>
+
